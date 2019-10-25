@@ -1,4 +1,4 @@
-# Calculadora de IMC
+﻿# Calculadora de IMC
 
 Aplicativo de uma calculadora de IMC criado para disciplina de Programação Mobile.
 
@@ -11,7 +11,7 @@ Tutorial de criação deste app: http://bit.ly/2Zry7Uh
 ## Como clonar e importar
 -   Faça um fork do projeto
 -   Abra o terminal do Visual Studio Code
--   Digite (troque kleberandrade pelo nome do seu usuários): git clone https://github.com/kleberandrade/calculadora-imc-aulas-flutter calculadora_imc
+-   Digite (troque AlanVidalll pelo nome do seu usuários): git clone https://github.com/AlanVidalll/calculadora-imc-aulas-flutter calculadora_imc
 -	Nome da pasta: calculadora_imc
 
 ## Desafio para aula

@@ -5,7 +5,9 @@ Aplicativo de uma calculadora de IMC criado para disciplina de Programação Mob
 Tutorial de criação deste app: http://bit.ly/2Zry7Uh
 
 <p align="center">
-    <img src="https://i.ibb.co/x6fDvDM/imc.jpg" width="800"/>
+    <img src="https://i.ibb.co/z77pp2D/3c86dafc-5aa0-4455-b4c0-4cbb9c838d82.jpg" width="400"/>
+    <img src="https://i.ibb.co/2MnqWYq/003915be-bf1d-4a39-a773-c0affe409354.jpg" width="400"/>
+    <img src="https://i.ibb.co/4JRcmQP/bd157107-9b32-4cfb-a066-9cc532193033.jpg" width="400"/>
 
 </p>
 

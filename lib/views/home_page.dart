@@ -13,18 +13,23 @@ class _HomeState extends State<Home> {
   var _pessoa2 = Person(peso: 0, altura: 0, genero: "homem");
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _infotext = "Selecione o Sexo";
+  String _infotext = "Preencha os Campos";
   String _infotext2 = "";
   String selectedRadio = "";
   String _imc2 = "";
-  Color cor = Colors.purple[600];
+  Color cor = Colors.black;
 
   void _calcMulher() {
     if (selectedRadio == _pessoa1.genero) {
       _calculate();
     } else if (selectedRadio == _pessoa2.genero) {
       _calculate2();
-    } else {}
+    } else if (selectedRadio == selectedRadio) {
+      _showDialogGenero(
+        title: "Campo Inválido",
+        message: "Selecione o Genero!",
+      );
+    }
   }
 
   void _mulherForma(String val) {
@@ -37,10 +42,11 @@ class _HomeState extends State<Home> {
     pesoController.text = "";
     alturaController.text = "";
     setState(() {
-      cor = Colors.purple[600];
+      cor = Colors.black;
       _infotext = "Preencha os Campos";
       _infotext2 = "";
       _imc2 = "";
+      selectedRadio = "";
       _formKey = GlobalKey<FormState>();
     });
   }
@@ -51,9 +57,9 @@ class _HomeState extends State<Home> {
       _pessoa1.altura = double.parse(alturaController.text) / 100;
       double imc = _pessoa1.peso / (_pessoa1.altura * _pessoa1.altura);
 
-      _infotext = "";
       _imc2 = "IMC: ";
       _infotext2 = "${imc.toStringAsPrecision(3)}";
+      _infotext = "";
       if (imc < 19.0) {
         _infotext += "Abaixo do Peso :(";
         cor = Colors.red[600];
@@ -78,9 +84,10 @@ class _HomeState extends State<Home> {
       _pessoa2.peso = double.parse(pesoController.text);
       _pessoa2.altura = double.parse(alturaController.text) / 100;
       double imc = _pessoa2.peso / (_pessoa2.altura * _pessoa2.altura);
-      _infotext = "";
+
       _imc2 = "IMC: ";
       _infotext2 = "${imc.toStringAsPrecision(3)}";
+      _infotext = "";
       if (imc < 20.0) {
         _infotext += "Abaixo do Peso :(";
         cor = Colors.red[600];
@@ -118,7 +125,8 @@ class _HomeState extends State<Home> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Icon(Icons.person_outline, size: 110.0, color: Colors.purple[600]),
+          Icon(Icons.person_outline,
+              size: 110.0, color: Colors.deepOrange[700]),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -148,7 +156,7 @@ class _HomeState extends State<Home> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: "Peso (kg)",
-              labelStyle: TextStyle(color: Colors.purple[700]),
+              labelStyle: TextStyle(color: Colors.deepOrange[700]),
             ),
             textAlign: TextAlign.left,
             style: TextStyle(color: Colors.black87, fontSize: 25.0),
@@ -165,7 +173,7 @@ class _HomeState extends State<Home> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: "Altura (cm)",
-              labelStyle: TextStyle(color: Colors.purple[700]),
+              labelStyle: TextStyle(color: Colors.deepOrange[700]),
             ),
             textAlign: TextAlign.left,
             style: TextStyle(color: Colors.black87, fontSize: 25.0),
@@ -180,6 +188,30 @@ class _HomeState extends State<Home> {
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  _imc2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 35.0,
+                  ),
+                ),
+                Text(
+                  _infotext2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 35.0,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
             child: Container(
               height: 50.0,
               child: Text(
@@ -192,31 +224,10 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                _imc2,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.purple[600],
-                  fontSize: 25.0,
-                ),
-              ),
-              Text(
-                _infotext2,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.purple[600],
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
           Padding(
             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
             child: Container(
-              height: 60.0,
+              height: 50.0,
               child: RaisedButton(
                 child: Text(
                   "CALCULAR",
@@ -224,7 +235,7 @@ class _HomeState extends State<Home> {
                 ),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
-                color: Colors.purple[600],
+                color: Colors.deepOrange[400],
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     _calcMulher();
@@ -245,13 +256,35 @@ class _HomeState extends State<Home> {
         style: TextStyle(fontSize: 30.0),
       ),
       centerTitle: true,
-      backgroundColor: Colors.purple[600],
+      backgroundColor: Colors.deepOrange[400],
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.refresh),
           onPressed: _resetfields,
         ),
       ],
+    );
+  }
+
+  void _showDialogGenero({String title, String message, Function confirm}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                if (confirm != null) confirm();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
